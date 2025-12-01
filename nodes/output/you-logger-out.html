@@ -1,0 +1,86 @@
+<script type="text/javascript">
+    RED.nodes.registerType('you-logger-out', {
+        category: 'YouLogger',
+        color: '#898989',
+        defaults: {
+            name: { value: '' },
+            logger: { value: "", type: 'you-logger'},
+            bodyLog: {value: '', required: true}
+        },
+        inputs: 1,
+        outputs: 0,
+        icon: 'font-awesome/fa-archive',
+        paletteLabel: "Write Logs",
+        label: function () {
+            return this.name || "Write Logs";
+        },
+        oneditprepare: function() {
+          $("#node-input-bodyLog").typedInput({
+            type:"msg",
+            types:["msg"],
+            typeField: "#node-input-bodyLog-type",
+            value: 'bodyLog'
+          });
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="you-logger-out">
+    <div class="form-row">
+      <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+      <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+      <label for="node-input-logger"><i class="fa fa-tag"></i> logger</label>
+      <input type="text" id="node-input-logger" placeholder="logger">
+    </div>
+    <div class="form-row">
+      <label for="node-input-type"><i class="fa fa-gears"></i> BodyLog</label>
+      <input type="text" id="node-input-bodyLog">
+      <input type="hidden" id="node-input-bodyLog-type">
+    </div>
+  </script>
+
+<script type="text/markdown" data-help-name="you-logger-out">
+  ### Logger Output (`you-logger-out`)
+
+  The **Logger Output** node is used to write logs, leveraging the power of the **Winston** library with file rotation management provided by **winston-daily-rotate-file**.
+  
+  #### Node Properties
+  
+  - **Name**: Node name for identification within the flow.
+  - **Logger Config**: Select the `Logger` configuration node to define logging settings.
+  - **Body Log**: Specifies the log content that should be present in the input message (`msg`). This can be a string or object field, and if not provided, the node returns an error.
+  
+  When triggered, the `Logger Output` node performs the following actions:
+  
+  1. **Log Writing**:
+     
+     - The specified property in the input message (`msg`) is transformed into a loggable format. If the message is a string, it is treated as an `info` level. If it’s an object, it can contain the `level` field to specify the log level (e.g., `info`, `warn`, `error`); all expected properties will be included in the log.
+     - Logs include additional information such as:
+       - `msgId`: The message ID.
+       - `flowid`: The flow ID in Node-RED.
+       - `flowname`: The Node-RED flow name.
+       - `uniqueId`: A generated UUID to uniquely identify the log.
+       - `configurationName`: The name of the logger configuration used.
+  
+  2. **Example Log**:
+     
+     A written log might appear as follows:
+     
+     ```json
+     {
+         "configurationName": "LoggerNodeRed",
+         "flowid": "0e361e13e07cca48",
+         "flowname": "Test Flow",
+         "level": "info",
+         "msgId": "7ba49eb2a7fe915f",
+         "nodeid": "7f636f4b33cf75cb",
+         "timestamp": "2024-10-18 08:02:00",
+         "mycustomProps": "My Custom Value",
+         "value": "TEST",
+         "uniqueId": "dd14ded9-e232-4050-94b1-99fdd9a95ec8"
+     }
+     ```
+
+  </script>

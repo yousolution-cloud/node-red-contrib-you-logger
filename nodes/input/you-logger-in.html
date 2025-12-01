@@ -1,0 +1,62 @@
+<script type="text/javascript">
+    RED.nodes.registerType('you-logger-in', {
+        category: 'YouLogger',
+        color: '#898989',
+        defaults: {
+            name: { value: '' },
+            logger: { value: "", type: 'you-logger'},
+            query: {value: '', required: true}
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: 'font-awesome/fa-list',
+        paletteLabel: "Getting Logs",
+        label: function () {
+            return this.name || "Getting Logs";
+        },
+        oneditprepare: function() {
+          $("#node-input-query").typedInput({
+            type:"msg",
+            types:["msg"],
+            typeField: "#node-input-query-type",
+            value: 'query'
+          });
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="you-logger-in">
+    <div class="form-row">
+      <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+      <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+      <label for="node-input-logger"><i class="fa fa-tag"></i> logger</label>
+      <input type="text" id="node-input-logger" placeholder="logger">
+    </div>
+    <div class="form-row">
+      <label for="node-input-type"><i class="fa fa-gears"></i> Query</label>
+      <input type="text" id="node-input-query">
+      <input type="hidden" id="node-input-query-type">
+    </div>
+  </script>
+
+<script type="text/markdown" data-help-name="you-logger-in">
+  ### Logger Input (`you-logger-in`)
+
+  The **Logger Input** node allows you to query saved logs using extraction options based on the **winston-daily-rotate-file** library parameters.
+  
+  - **Main Properties**:
+    - **Name**: Node name for identification within the flow.
+    - **Logger Config**: Select the `Logger` configuration node containing global settings.
+    - **Query**: Specify a query to filter logs using the following parameters supported by Winston:
+      - **from**: Start date for the log search.
+      - **until**: End date for the log search.
+      - **limit**: Maximum number of logs to retrieve.
+      - **start**: Offset for starting the search (number of logs to skip).
+      - **order**: Log order (ascending or descending).
+      - **fields**: Specific fields to include in the results.
+  
+  When triggered, the node uses these parameters to query saved logs and returns the results as `msg.payload`.
+  
+  </script>

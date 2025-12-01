@@ -1,0 +1,78 @@
+
+<script type="text/html" data-template-name="you-logger">
+    <div class="form-row">
+      <label for="node-config-input-name"><i class="fa fa-name"></i> Name</label>
+      <input type="text" id="node-config-input-name" />
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-dirname"><i class="fa fa-url"></i> Dirname</label>
+        <input type="text" id="node-config-input-dirname" />
+      </div>
+      <div class="form-row">
+        <label for="node-config-input-level"><i class="fa fa-cog"></i> level</label>
+        <select name="node-config-input-level" id="node-config-input-level">
+          <option value="info">info</option>
+          <option value="warning">warning</option>
+          <option value="error">error</option>
+          <option value="crit">crit</option>
+          <option value="alert">alert</option>
+          <option value="debug">debug</option>
+          <option value="emerg">emerg</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label for="node-config-input-datePattern"><i class="fa fa-asterisk"></i> DatePattern</label>
+        <input type="text" id="node-config-input-datePattern" />
+      </div>
+      <div class="form-row">
+        <label for="node-config-input-zippedArchive"><i class="fa fa-zip"></i> ZippedArchive</label>
+        <input type="checkbox" id="node-config-input-zippedArchive" />
+      </div>
+      <div class="form-row">
+        <label for="node-config-input-maxSize"><i class="fa fa-database"></i> MaxSize</label>
+        <input type="text" id="node-config-input-maxSize" />
+      </div>
+      <div class="form-row">
+        <label for="node-config-input-maxFiles"><i class="fa fa-user"></i> MaxFiles</label>
+        <input type="text" id="node-config-input-maxFiles" />
+      </div>
+  </script>
+  
+  <script type="text/javascript">
+    RED.nodes.registerType('you-logger', {
+      category: 'config',
+      color:"#898989",
+      icon: 'font-awesome/fa-log',
+      defaults: {
+        name: { value: '' },
+        dirname: { value: '/data/you-logger/logs', required: true },
+        datePattern: { value: 'YYYY-MM-DD',  required: true },
+        zippedArchive: { value: true },
+        maxSize: { value: '50m' , required: true},
+        maxFiles: { value: '30d', required: true },
+        level: { value: 'info' },
+      },
+      label: function() {
+        return  this.name
+      }
+    });
+  </script>
+
+
+<script type="text/markdown" data-help-name="you-logger">
+  
+  Logger Config (`you-logger`)
+
+  This configuration node allows you to centralize logging settings. The parameters you can configure are as follows:
+  
+  - **Name**: The configuration name, used to identify the set of configurations.
+  - **Dirname**: The path where log files will be saved. By default, logs are saved in the `/data/you-logger/logs` folder.
+  - **Date Pattern**: The date format that will be used in log file names. The default value is `YYYY-MM-DD`.
+  - **Zipped Archive**: An option to compress log files. By default, this is enabled (`true`).
+  - **Max Size**: The maximum size of log files before rotation occurs. The default value is `50m` (50 megabytes).
+  - **Max Files**: The maximum number of log files to retain before deleting them. The default value is `30d` (30 days).
+  - **Log Level**: Sets the default log level for recording (`info`, `warn`, `error`, `debug`, etc.).
+  
+  For more information, see [winstonjs/winston-daily-rotate-file:](https://github.com/winstonjs/winston-daily-rotate-file)
+
+</script>
