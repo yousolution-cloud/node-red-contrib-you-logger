@@ -1,0 +1,58 @@
+{
+  "name": "@yousolution/node-red-contrib-you-logger",
+  "version": "0.0.2",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx mocha test/test.js",
+    "update": "run-script-os",
+    "update:linux:darwin": "npm pack && mv yousolution-node-red-contrib-you-logger-$npm_package_version.tgz ./data && cd data && npm i yousolution-node-red-contrib-you-logger-$npm_package_version.tgz && docker-compose restart",
+    "update:win32": "npm pack && copy yousolution-node-red-contrib-you-logger-%npm_package_version%.tgz .\\data\\ && cd .\\data\\ && npm i yousolution-node-red-contrib-you-logger-%npm_package_version%.tgz && docker-compose restart",
+    "update:default": "npm pack && mv yousolution-node-red-contrib-you-logger-$npm_package_version.tgz ./data && cd data && npm i yousolution-node-red-contrib-you-logger-$npm_package_version.tgz && docker-compose restart"
+  },
+  "author": "Alessio Pellizzaro <alessio.pellizzaro@innotech.email>",
+  "license": "MPL-2.0",
+  "node-red": {
+    "version": ">=2.0.0",
+    "nodes": {
+      "you-logger": "nodes/configs/logger.js",
+      "you-logger-out": "nodes/output/you-logger-out.js",
+      "you-logger-in": "nodes/input/you-logger-in.js"
+    }
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "node-red",
+    "logs",
+    "NTH",
+    "Innotech",
+    "winston",
+    "integration",
+    "YouSolution.cloud"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yousolution-cloud/yousolution-cloud-node-red-contrib-you-logger.git"
+  },
+  "devDependencies": {
+    "@types/node-red-node-test-helper": "^0.2.2",
+    "chai": "^5.1.1",
+    "mocha": "^10.7.3",
+    "node-red": "^3.0.2",
+    "node-red-node-test-helper": "^0.3.0",
+    "run-script-os": "^1.1.6",
+    "sinon": "^19.0.2"
+  },
+  "dependencies": {
+    "axios": "^1.7.7",
+    "readline": "^1.3.0",
+    "uuid": "^10.0.0",
+    "winston": "^3.15.0",
+    "winston-daily-rotate-file": "^5.0.0"
+  }
+}

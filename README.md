@@ -42,6 +42,7 @@ The **Logger Input** node allows you to query saved logs using extraction option
     - **start**: Offset for starting the search (number of logs to skip).
     - **order**: Log order (ascending or descending).
     - **fields**: Specific fields to include in the results.
+    - **filter**: set key-value search filter (__Attenction__ this filter is RAM Intesive operation) 
 
 When triggered, the node uses these parameters to query saved logs and returns the results as `msg.payload`.
 
