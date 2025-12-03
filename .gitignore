@@ -70,4 +70,4 @@ apcx_templates/
 logs/
 
 *.log
-*.json
+
